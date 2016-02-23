@@ -1,0 +1,134 @@
+[
+{
+	"barcode" : 7622300847210,
+	"name" : "Express clásicas"
+},
+{
+	"barcode" : 7798094424170,
+	"name" : "Polvo desodorante"
+},
+{
+	"barcode" : 7790742108807,
+	"name" : "Leche Entera La Serenísima"
+},
+{
+	"barcode" : 7790895067594,
+	"name" : "CocaCola Zero 237ml",
+	"prices" : [
+		{
+			"price" : "10",
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : null
+		}
+	]
+},
+{
+	"barcode" : 7790040929906,
+	"name" : "Chocolinas",
+	"prices" : [
+		{
+			"price" : 11.74,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7796613011764,
+	"name" : "Atún desmenuzado m&k",
+	"prices" : [
+		{
+			"price" : 10.74,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7797234081150,
+	"name" : "Pimienta negra en grano m&k",
+	"prices" : [
+		{
+			"price" : 102.98,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7791200000091,
+	"name" : "Cynar 900ml",
+	"prices" : [
+		{
+			"price" : 72.67,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7790613001976,
+	"name" : "Cunnington Cola 2.25l",
+	"prices" : [
+		{
+			"price" : 13.14,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7790613000002,
+	"name" : "Cunnington Pomelo Light 2.25l",
+	"prices" : [
+		{
+			"price" : 14.88,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7798019800027,
+	"name" : "Yerba Las Tunas 1kg",
+	"prices" : [
+		{
+			"price" : 50.25,
+			"date" : "2016-02-19",
+			"username" : "dolcea",
+			"vendor" : 20342510044
+		}
+	]
+},
+{
+	"barcode" : 7798013103155,
+	"name" : "Leberwurst Cagnoli",
+	"prices" : [
+		{
+			"price" : 16.66,
+			"date" : "2016-02-17",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7891167011779,
+	"name" : "Atún desmenuzado Gomes",
+	"prices" : [
+		{
+			"price" : 25,
+			"date" : "2016-02-22",
+			"username" : "dolcea",
+			"vendor" : 30713401400
+		}
+	]
+}
+]
