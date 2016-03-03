@@ -104,6 +104,12 @@
 			"date" : "2016-02-19",
 			"username" : "dolcea",
 			"vendor" : 20342510044
+		},
+		{
+			"price" : 51,
+			"date" : "2016-03-18",
+			"username" : "dolcea",
+			"vendor" : 20342510044
 		}
 	]
 },
@@ -128,6 +134,78 @@
 			"date" : "2016-02-22",
 			"username" : "dolcea",
 			"vendor" : 30713401400
+		}
+	]
+},
+{
+	"barcode" : 7790040377707,
+	"name" : "Criollitas Original",
+	"prices" : [
+		{
+			"price" : 8,
+			"date" : "2016-02-25",
+			"username" : "dolcea",
+			"vendor" : 30709368237
+		}
+	]
+},
+{
+	"barcode" : 7790310005712,
+	"name" : "Doritos",
+	"prices" : [
+		{
+			"price" : 43,
+			"date" : "2016-02-24",
+			"username" : "dolcea",
+			"vendor" : 30709368237
+		}
+	]
+},
+{
+	"barcode" : 7793147000981,
+	"name" : "Imperial Lager",
+	"prices" : [
+		{
+			"price" : 22.89,
+			"date" : "2016-02-25",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7792798006199,
+	"name" : "Stella Atrois",
+	"prices" : [
+		{
+			"price" : 36.51,
+			"date" : "2016-02-25",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7622300829520,
+	"name" : "Terrabusi Variedad",
+	"prices" : [
+		{
+			"price" : 29.39,
+			"date" : "2016-02-25",
+			"username" : "dolcea",
+			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7794536191136,
+	"name" : "Pela y pica ajo",
+	"prices" : [
+		{
+			"price" : 86.90,
+			"date" : "2016-02-21",
+			"username" : "dolcea",
+			"vendor" : 30589621499
 		}
 	]
 }
