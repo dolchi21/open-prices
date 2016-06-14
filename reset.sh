@@ -1,3 +1,4 @@
-node sequelize.js reset
+node sequelize.js
 node populate.js
-#node bin/www
+node populate-prices.js
+node bin/www

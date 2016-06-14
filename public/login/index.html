@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/font-awesome-4.6.3/css/font-awesome.min.css">
+
+	<script type="text/javascript" src="/jquery/jquery-2.1.4.min.js"></script>
+	
+	<script type="text/javascript" src="/js/axios.min.js"></script>
+	<script type="text/javascript" src="/js/store.min.js"></script>
+	<script type="text/javascript" src="/js/report.js"></script>
+
+	<script type="text/javascript" src="/js/common.js"></script>
+
+	<!-- MODELS -->
+	<script type="text/javascript" src="/js/api.js"></script>
+	<script type="text/javascript" src="/js/auth.js"></script>
+	<script type="text/javascript" src="/js/user.js"></script>
+	<!-- /MODELS -->
+
+	<style type="text/css">
+		.container { max-width: 30rem; }
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		
+		<h3>User Login</h3>
+
+		<form class="form-horizontal" method="POST">
+			
+			<div class="form-group">				
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-user"></i>
+					</span>
+					<input class="form-control" id="username" name="username" value="axel.dolce@gmail.com"></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-asterisk"></i>
+					</span>
+					<input class="form-control" id="password" name="password" type="password" value="incorrect"></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-default">Login</button>
+			</div>
+
+		</form>
+
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			
+			$('form').submit(function(ev){
+				
+				ev.preventDefault();
+				
+				var username = $(this).find('#username').val();
+				var password = $(this).find('#password').val();
+				
+				Auth.login(username, password).then(function(token){
+					store.set('token', token);
+					window.location = '/user/profile.html';
+				});
+
+			});
+
+		});
+	</script>
+
+</body>
+</html>

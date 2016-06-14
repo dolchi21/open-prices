@@ -2,10 +2,10 @@ var sequelize = require('./sequelize');
 
 
 
-var User = sequelize.models.user;
-var Vendor = sequelize.models.vendor;
-var Price = sequelize.models.price;
-var Product = sequelize.models.product;
+var User = sequelize.model('User');
+var Vendor = sequelize.model('Vendor');
+var Price = sequelize.model('Price');
+var Product = sequelize.model('Product');
 
 
 
@@ -43,9 +43,9 @@ setups.products = (function(products){
 					return Price.create({
 						price : price.price,
 						date : price.date,
-						productId : product.id,
-						userId : user.id,
-						vendorId : vendor.id
+						ProductId : product.id,
+						UserId : user.id,
+						VendorId : vendor.id
 					}).then(function(price){
 						console.log('new price', price.get());
 					}).catch(function(err){ console.error(err); });

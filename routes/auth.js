@@ -1,23 +1,27 @@
-var chance = new require('chance')();
-
 var express = require('express');
 var router = express.Router();
 
+var jsonwebtoken = require('jsonwebtoken');
+var jwt = require('express-jwt');
+var uuid = require('node-uuid');
+
+
+
+var config = require('../config');
 
 var sequelize = require('../sequelize');
-var User = sequelize.models.user;
+var User = sequelize.model('User');
 
 
-router.post('/register', function(req, res){
+
+router.post('/register', function register(req, res){
 	
 	var username = req.body.username;
 	var password = req.body.password;
-	var salt = password_salt();
 
 	User.create({
 		username : username,
-		password : sha256(password + salt),
-		password_salt : salt
+		password : password
 	}).then(function(user){
 		
 		return res.json( user.get() );
@@ -38,34 +42,60 @@ router.post('/register', function(req, res){
 	});
 });
 
-router.get('/users', function(req, res){
+router.get('/users', function users(req, res){
+	
 	User.all().then(function(users){
 		var json = users.map(function(u){
 			return {
-				username : u.username,
-				id : u.id
+				id : u.id,
+				username : u.username
 			}
 		});
-		res.json(json);
+		return res.json(json);
 	});
+
+});
+
+router.post('/token', function token(req, res){
+
+	var username = req.body.username;
+	var password = req.body.password;
+
+	User.findOne({
+		where : {
+			username : username
+		}
+	}).then(function(user){
+
+		if (!user) { res.status(400).json(null); }
+
+		if (user.passwordEquals(password)) {
+			var payload = {
+				id : user.get('id'),
+				username : user.get('username')
+			}
+			var token = jsonwebtoken.sign(payload, config.JWT_SECRET + req.ip, {
+				issuer : 'openprices',
+				expiresIn : 60 * 15,
+				jwtid : uuid.v4()
+			});
+			res.json({ token : token });
+		} else {
+			res.status(400).json(null);
+		}
+
+	});
+
+});
+
+
+var secretCallback = function(req, payload, done){
+	done(null, config.JWT_SECRET + req.ip);
+}
+router.get('/protected', jwt({ secret : secretCallback }), function protected(req, res){
+
+	res.json(req.user);
+
 });
 
 module.exports = router;
-
-var sha256 = function sha256(str) {
-	var crypto = require('crypto');
-	var hash = crypto.createHmac('sha256', 'open-prices').update(str).digest('hex');
-	return hash;
-}
-var password_salt = function(){
-	return chance.string({
-		length : 4,
-		pool : 'abcdefghijklmnopqrstuvwxyz0123456789'
-	});
-}
-
-function instances2object(instances){
-	return instances.map(function(i){
-		return i.get();
-	});
-}

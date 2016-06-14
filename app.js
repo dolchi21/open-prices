@@ -10,6 +10,8 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.enable('trust proxy');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -33,6 +35,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api', require('./routes/api'));
+
+app.get('/restart', function restart() {
+  process.on('exit', function(){
+    console.log('Bye bye.')
+  })
+  process.exit(0);
+});
 
 
 
@@ -67,5 +76,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+(function printRoutes(app){
+  require('express-print-routes')(app, './routes.txt');
+})(app);
 
 module.exports = app;

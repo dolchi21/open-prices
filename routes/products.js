@@ -4,11 +4,11 @@ var express = require('express');
 var router = express.Router();
 var sequelize = require('../sequelize');
 
-var Product = sequelize.models.product;
-var ProductName = sequelize.models.productName;
-var Price = sequelize.models.price;
-var User = sequelize.models.user;
-var Vendor = sequelize.models.vendor;
+var Product = sequelize.model('Product');
+var ProductName = sequelize.model('ProductName');
+var Price = sequelize.model('Price');
+var User = sequelize.model('User');
+var Vendor = sequelize.model('Vendor');
 
 
 

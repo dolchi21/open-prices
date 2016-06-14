@@ -16,9 +16,9 @@
 	"name" : "CocaCola Zero 237ml",
 	"prices" : [
 		{
-			"price" : "10",
+			"price" : 10,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : null
 		}
 	]
@@ -30,7 +30,7 @@
 		{
 			"price" : 11.74,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -42,7 +42,7 @@
 		{
 			"price" : 10.74,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -54,7 +54,7 @@
 		{
 			"price" : 102.98,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -66,7 +66,7 @@
 		{
 			"price" : 72.67,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -78,7 +78,7 @@
 		{
 			"price" : 13.14,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -90,7 +90,7 @@
 		{
 			"price" : 14.88,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -102,13 +102,13 @@
 		{
 			"price" : 50.25,
 			"date" : "2016-02-19",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 20342510044
 		},
 		{
 			"price" : 51,
 			"date" : "2016-03-18",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 20342510044
 		}
 	]
@@ -120,7 +120,7 @@
 		{
 			"price" : 16.66,
 			"date" : "2016-02-17",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -132,7 +132,7 @@
 		{
 			"price" : 25,
 			"date" : "2016-02-22",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30713401400
 		}
 	]
@@ -144,8 +144,14 @@
 		{
 			"price" : 8,
 			"date" : "2016-02-25",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30709368237
+		},
+		{
+			"price" : 10,
+			"date" : "2016-03-04",
+			"username" : "axel.dolce@gmail.com",
+			"vendor" : 20342510044
 		}
 	]
 },
@@ -156,7 +162,7 @@
 		{
 			"price" : 43,
 			"date" : "2016-02-24",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30709368237
 		}
 	]
@@ -168,7 +174,13 @@
 		{
 			"price" : 22.89,
 			"date" : "2016-02-25",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
+			"vendor" : 30589621499
+		},
+		{
+			"price" : 19.87,
+			"date" : "2016-03-05",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -180,7 +192,7 @@
 		{
 			"price" : 36.51,
 			"date" : "2016-02-25",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -192,7 +204,7 @@
 		{
 			"price" : 29.39,
 			"date" : "2016-02-25",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
 		}
 	]
@@ -204,8 +216,20 @@
 		{
 			"price" : 86.90,
 			"date" : "2016-02-21",
-			"username" : "dolcea",
+			"username" : "axel.dolce@gmail.com",
 			"vendor" : 30589621499
+		}
+	]
+},
+{
+	"barcode" : 7798126071136,
+	"name" : "Gaona Pepas Light",
+	"prices" : [
+		{
+			"price" : 21,
+			"date" : "2016-04-18",
+			"username" : "axel.dolce@gmail.com",
+			"vendor" : 30709368237
 		}
 	]
 }

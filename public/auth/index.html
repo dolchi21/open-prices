@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Auth</title>
+	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script type="text/javascript" src="/jquery/jquery-2.1.4.min.js"></script>
+	
+	<script type="text/javascript" src="/js/axios.min.js"></script>
+	<script type="text/javascript" src="/js/store.min.js"></script>
+	<script type="text/javascript" src="/js/report.js"></script>
+
+	<script type="text/javascript" src="/js/api.js"></script>
+	<script type="text/javascript" src="/js/auth.js"></script>
+	<script type="text/javascript" src="/js/user.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+		(function(){
+
+			Auth.login('axel.dolce@gmail.com', 'incorrect').then(function(token){
+				
+				store.set('token', token);
+
+				User.load().then(function(user){
+					console.log(user.json());
+				});
+
+			});
+
+		})();
+	</script>
+
+</body>
+</html>

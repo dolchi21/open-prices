@@ -6,23 +6,17 @@ var sha256 = function sha256(str) {
 	var hash = crypto.createHmac('sha256', 'open-prices').update(str).digest('hex');
 	return hash;
 }
-var password_salt = function(){
-	return chance.string({
-		length : 4,
-		pool : 'abcdefghijklmnopqrstuvwxyz0123456789'
-	});
-}
 
 
 var sequelize = require('./sequelize');
 
 
 
-var User = sequelize.models.user;
-var Vendor = sequelize.models.vendor;
-var Price = sequelize.models.price;
-var Product = sequelize.models.product;
-var ProductName = sequelize.models.productName;
+var User = sequelize.model('User');
+var Vendor = sequelize.model('Vendor');
+var Price = sequelize.model('Price');
+var Product = sequelize.model('Product');
+var ProductName = sequelize.model('ProductName');
 
 
 var setups = {}
@@ -32,11 +26,9 @@ var setups = {}
 setups.users = (function(users){
 
 	var promises = users.map(function(user){
-		var salt = password_salt();
 		return User.create({
 			username : user.username,
-			password : sha256(user.password + salt),
-			password_salt : salt
+			password : user.password,
 		});
 	});
 	return Promise.all( promises );
@@ -54,8 +46,8 @@ setups.products = (function(products){
 
 			ProductName.create({
 				name : product.name,
-				productId : p.id,
-				userId : 1
+				ProductId : p.id,
+				UserId : 1
 			}).then(function(pn){
 				console.log(pn.get());
 			}).catch(function(err){

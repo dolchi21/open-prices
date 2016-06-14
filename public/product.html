@@ -2,7 +2,9 @@
 <html>
 <head>
 	<title>Product</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/font-awesome-4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="/js/toastr/toastr.css">
 
 
@@ -12,6 +14,7 @@
 	
 	<script type="text/javascript" src="/js/EventEmitter.min.js"></script>
 	<script type="text/javascript" src="/js/util.js"></script>
+	<script type="text/javascript" src="/js/moment.min.js"></script>
 
 
 	<script type="text/javascript" src="/js/getJSON.js"></script>
@@ -23,12 +26,14 @@
 	<script type="text/javascript" src="/react/react-dom.js"></script>
 	<script type="text/javascript" src="/react/browser.min.js"></script>
 	
-	<script type="text/babel" src="/react/product.js"></script>
+	<script type="text/javascript" src="/react/product.js"></script>
+	<script type="text/javascript" src="/react/app.js"></script>
 	<!-- /REACT -->
 
 
 	<script type="text/javascript">
 		toastr.options.positionClass = "toast-bottom-right";
+		$(document).ready(init);
 	</script>
 
 	<style type="text/css">
@@ -49,10 +54,14 @@
 	</nav>
 	<div class="container">
 		
-		<div class="row">
+		<div class="flex-box">
 
-			<div class="col-sm-6">
-				<div id="product"></div>
+			<div class="width-50">
+				<div id="product_list"></div>
+			</div>
+
+			<div class="width-50">
+				<div id="product">asd</div>
 			</div>
 		
 		</div>
