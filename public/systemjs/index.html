@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SystemJS</title>
+	<script type="text/javascript" src="/js/system.src.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		function UserTest(){
+
+			var onLoadUser = SystemJS.import('/js/user.js');
+
+			onLoadUser.then(function(User){
+
+				User.load().then(function onUser(user){
+					console.log(user);
+				});
+
+			});
+			onLoadUser.then(function(User){
+
+				User.register('axel.dolce@gmail.com', 'incorrect').then(function onUser(user){
+					console.log(user);
+				});
+
+			});
+
+			//User.load();
+
+		}
+
+		function ProductTest(){
+			SystemJS.import('/js/product.js').then(function(Product){
+
+				Product.all();
+
+			});
+		}
+
+		UserTest();
+
+	</script>
+</body>
+</html>

@@ -1,4 +1,10 @@
-(function(){
+;(function(factory){
+	if (typeof module === 'object' && typeof exports === 'object') {
+		module.exports = factory( require('./axios.min.js'), require('./EventEmitter.min.js'), require('./util.js') );
+	} else {
+		window.Product = factory(axios, EventEmitter, util);
+	}
+})(function ProductFactory(axios, EventEmitter, util){
 
 	function Product(){
 		var self = this;
@@ -77,20 +83,27 @@
 		EventEmitter.call(this);
 	}
 	Product.find = function find(barcode){
-		return getJSON('/api/products/' + barcode).then(function(data){
+		return axios('/api/products/' + barcode).then(function(response){
+
+			var data = response.data;
+
 			var product = new Product();
 			product.barcode(data.barcode);
 			product.prices(data.prices);
 			return product;
+
 		});
 	}
 	Product.all = function all(){
-		return getJSON('/api/products').then(function(products){
+		return axios.get('/api/products').then(function(response){
+
+			var products = response.data;
 			return products.map(function(data){
 				var product = new Product();
 				product.barcode( data.barcode );
 				return product;
 			});
+
 		});
 	}
 	Product.create = function create (data) {
@@ -120,6 +133,6 @@
 
 	util.inherits(Product, EventEmitter);
 
-	window.Product = Product;
+	return Product;
 
-})()
+});

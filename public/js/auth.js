@@ -1,8 +1,23 @@
-(function(){
+;(function(factory){
+
+	if (typeof module === 'object' && typeof exports === 'object') {
+
+		var Auth = factory( require('./axios.min.js') );
+		module.exports = new Auth();
+
+	} else {
+
+		var Auth = factory(axios);
+		window.Auth = new Auth();
+
+	}
+
+
+})(function AuthFactory(axios){
 
 	function Auth(){
 
-		self.baseUrl = '/api';
+		self._baseUrl = '/api';
 
 		function getToken(username, password){
 			return axios.post('/api/auth/token', {
@@ -32,6 +47,7 @@
 
 	}
 
-	window.Auth = new Auth();
 
-})()
+	return Auth;
+
+});

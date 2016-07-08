@@ -12,7 +12,9 @@ describe('User', function(){
 
 			if (user.passwordEquals('incorrect')) { done(); }
 
-		}).catch(function(){});
+		}).catch(function(err){
+			done(new Error(err));
+		});
 
 	});
 
@@ -29,6 +31,8 @@ describe('User', function(){
 
 			if (user.passwordEquals('correct')) { done(); }
 
+		}).catch(function(err){
+			done(new Error(err));
 		});
 
 	});
@@ -39,7 +43,9 @@ describe('User', function(){
 			where : { username : 'axel.dolce@gmail.com' }
 		}).then(function(){
 			done();
-		}).catch(function(){});
+		}).catch(function(err){
+			done(new Error(err));
+		});
 
 	});
 

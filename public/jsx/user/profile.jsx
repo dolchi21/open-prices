@@ -10,8 +10,6 @@
 					</div>
 				</div>
 				);
-		},
-		renderAttributes : function renderAttributes(user) {
 		}
 	});
 	var UserDataList = React.createClass({

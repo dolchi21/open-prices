@@ -31,7 +31,10 @@ router.post('/register', function register(req, res){
 		switch (err.name) {
 			
 			case 'SequelizeUniqueConstraintError':
-			return res.status(400).json(err);
+			return res.status(400).json({
+				code : 88400,
+				message : 'Username already exists.'
+			});
 			break;
 
 			default:

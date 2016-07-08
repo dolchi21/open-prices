@@ -1,0 +1,10 @@
+{
+	"language" : {
+		"es" : "Lenguaje",
+		"en" : "Language"
+	},
+	"unknown_error" : {
+		"es" : "Error desconocido",
+		"en" : "Unknown error"
+	}
+}

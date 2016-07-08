@@ -1,0 +1,10 @@
+{
+	"forgot_password" : {
+		"es" : "Olvidó contraseña",
+		"en" : "Forgot password"
+	},
+	"incorrect_username_password" : {
+		"es" : "Usuario/contraseña incorrecto",
+		"en" : "Incorrect username/password"
+	}
+}

@@ -1,122 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
+	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/font-awesome-4.6.3/css/font-awesome.min.css">
+
+	
+	<script type="text/javascript" src="/jquery/jquery-2.1.4.min.js"></script>
+	<!--
+	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/effects-eighty" type="text/css"/>
+	<script type="text/javascript" src="/js/axios.min.js"></script>
+	<script type="text/javascript" src="/js/store.min.js"></script>
+	-->
+	
+	<script type="text/javascript" src="/js/report.js"></script>
 
 	<title>OpenPrices</title>
 
-	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
-	<script type="text/javascript" src="/jquery/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript">
-		function getJSON(url){
-			return new Promise(function(resolve, reject){
-				$.getJSON(url).done(function(data, status, xhr){
-					resolve(data);
-				});
-			});
+	<link rel="stylesheet" type="text/css" href="/css/style.css" id="style">
+	<style type="text/css">
+		
+		body { -background-color: #FF0007; }
+
+		.container {
+			max-width: 60rem;
 		}
-	</script>
+		.text-white:hover {
+			color: white;
+		}
 
-	<script type="text/javascript" src="/js/api.js"></script>
-	<script type="text/javascript" src="/js/product.js"></script>
-
+	</style>
 </head>
 <body>
-
-	<div class="row">
-		<div class="col-sm-4">
-
-
-
-			<div class="panel" id="products">
-				<div class="panel-heading">
-					<h3 class="panel-title">Products</h3>
-					<button class="btn btn-sm btn-default" onclick="api.randomProduct(); refresh(this);">new</button>
-					<button class="btn btn-sm btn-default" onclick="refresh(this)">refresh</button>
-				</div>
-				<div class="panel-body">
-					<ul class="list-group"></ul>
-				</div>
-			</div>
-
-
-
-		</div>
-		<div class="col-sm-4">
-
-
-
-			<div class="panel" id="vendors">
-				<div class="panel-heading">
-					<h3 class="panel-title">Vendors</h3>
-					<button class="btn btn-sm btn-default" onclick="api.randomVendor(); refresh(this);">new</button>
-					<button class="btn btn-sm btn-default" onclick="refresh(this)">refresh</button>
-				</div>
-				<div class="panel-body">
-					<ul class="list-group"></ul>
-				</div>
-			</div>
-
-
-			
-		</div>
-		<div class="col-sm-4">
-
-
-
-			<div class="panel" id="prices">
-				<div class="panel-heading">
-					<h3 class="panel-title">Prices</h3>
-					<button class="btn btn-sm btn-default" onclick="api.randomPrice(); refresh(this);">new</button>
-					<button class="btn btn-sm btn-default" onclick="refresh(this)">refresh</button>
-				</div>
-				<div class="panel-body">
-					<ul class="list-group"></ul>
-				</div>
-			</div>
-
-
-			
+	<div class="container">
+		<div id="margin"></div>
+		<div id="content" class="jumbotron bg-red text-align-center text-family-bold">
+			<a href="/login" class="text-white">
+				<h1>
+					<span>OpenPrices</span><span class="text-white" style="font-size: 75%;">.org</span>
+				</h1>
+			</a>
 		</div>
 	</div>
-
 	<script type="text/javascript">
-		function refresh(el){
-			var panel = $(el).parent().parent();
+		$(document).ready(function(){
 
-			var model = $(panel).attr('id');
+			(function autoCenter(){
 
-			api[model]().then(function(instances){
+				function center(){
+					
+					var wh = $(window).height();
+					var ch = $('#content').height();
+					var mh = (wh - ch) / 4;
 
-				var list = $(panel).find('.panel-body .list-group');
-				$(list).empty();
+					$('#margin').height(mh)
 
-				for (var i in instances) {
-					var instance = instances[i];
-
-					var item = $('div.templates').find('.template').clone();
-					$(item).find('h4').html(instance.barcode || instance.name);
-
-
-					try {
-						$(item).find('p').html( JSON.stringify(instance.prices.map(function(price){
-							return price.price;
-						})) );
-					} catch (e) {
-						$(item).find('p').html( JSON.stringify(instance.address) );
-					}
-
-					$(panel).find('.panel-body .list-group').append(item);
 				}
-			});
-		}
+				
+				center();
+				
+				$(window).on('resize', center);
+
+			})();
+
+		});
 	</script>
-
-	<div class="templates">
-		<li class="template list-group-item">
-			<h4 class="list-group-item-heading"></h4>
-			<p></p>
-		</li>
-	</div>
-
 </body>
 </html>

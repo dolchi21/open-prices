@@ -1,21 +1,28 @@
-(function(window){
+;(function(Util){
+	
+	if (typeof module === 'object' && typeof exports === 'object') {
 
-	function Util () {
-		function inherits (ctor, superCtor) {
-			ctor.super_ = superCtor;
-			ctor.prototype = Object.create(superCtor.prototype, {
-				constructor: {
-					value: ctor,
-					enumerable: false,
-					writable: true,
-					configurable: true
-				}
-			});
-		}
-		this.inherits = inherits;
+		module.exports = Util();
+
+	} else {
+
+		window.util = Util();
+
 	}
 
-	var util = new Util();
-	window.util = util;
+})(function Util(){
+	
+	function inherits (ctor, superCtor) {
+		ctor.super_ = superCtor;
+		ctor.prototype = Object.create(superCtor.prototype, {
+			constructor: {
+				value: ctor,
+				enumerable: false,
+				writable: true,
+				configurable: true
+			}
+		});
+	}
+	return { inherits : inherits }
 
-})(window);
+});

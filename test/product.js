@@ -10,8 +10,9 @@ describe('Product', function(){
 			include : [{all:true}],
 			order : [sequelize.fn('RAND')]
 		}).then(function(product){
-			console.log(product.get())
 			done();
+		}).catch(function(err) {
+			done(new Error(err));
 		});
 	});
 

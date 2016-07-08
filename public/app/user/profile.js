@@ -14,8 +14,7 @@
 					React.createElement(UserDataList, { user: user })
 				)
 			);
-		},
-		renderAttributes: function renderAttributes(user) {}
+		}
 	});
 	var UserDataList = React.createClass({
 		displayName: "UserDataList",

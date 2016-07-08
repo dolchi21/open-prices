@@ -3,12 +3,12 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-	<title>User Login</title>
-	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/font-awesome-4.6.3/css/font-awesome.min.css">
+	<title>Sign Up</title>
 
 	<script type="text/javascript" src="/jquery/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/font-awesome-4.6.3/css/font-awesome.min.css">
 	
 	<!-- ALERTIFYJS -->
 	<link rel="stylesheet" type="text/css" href="/js/alertify/css/alertify.css">
@@ -24,16 +24,14 @@
 	<script type="text/javascript" src="/js/axios.min.js"></script>
 	<script type="text/javascript" src="/js/EventEmitter.min.js"></script>
 	<script type="text/javascript" src="/js/store.min.js"></script>
-	<script type="text/javascript" src="/js/system.src.js"></script>
+	<script type="text/javascript" src="/js/system.js"></script>
 	<script type="text/javascript" src="/js/util.js"></script>
-
+	
 	<script type="text/javascript" src="/js/report.js"></script>
 
-	<script type="text/javascript" src="/js/common.js" id="common"></script>
-	<script type="text/javascript" src="/js/js-loader.js" id="js-loader"></script>
 	<script type="text/javascript" src="/js/i18n.js"></script>
 	<script type="text/javascript">
-		i18n.loadURL(['common', 'login']);
+		i18n.loadURL(['common', 'register']);
 	</script>
 
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -50,67 +48,77 @@
 	<div id="nav"></div>
 
 	<div class="container">
-
+		
 		<div id="margin"></div>
 		<div id="content">
-
+			
 			<div class="panel">
-				<div class="panel-heading bg-red text-white">
-					<a href="/" class="text-white text-bold">
-						<h1>User Login</h1>
+				<div class="panel-heading bg-red text-white text-fantasy">
+					<a href="/" class="text-white">
+						<h1>User Registration</h1>
 					</a>
 				</div>
 				<div class="panel-body">
-					<form class="form-horizontal" method="POST">
+					<form class="form-horizontal" method="POST" autocomplete="off">
 
 						<div class="form-group">				
 							<div class="input-group">
-								<span class="input-group-addon bg-red text-white"><i class="mwidth-3r fa fa-user"></i></span>
+								<span class="input-group-addon bg-red text-white">
+									<i class="mwidth-3r fa fa-user"></i>
+								</span>
 								<input class="form-control" id="username" name="username" placeholder="Username"></input>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon bg-red text-white"><i class="mwidth-3r fa fa-asterisk"></i></span>
+								<span class="input-group-addon bg-red text-white">
+									<i class="mwidth-3r fa fa-asterisk"></i>
+								</span>
 								<input class="form-control" id="password" name="password" type="password" placeholder="Password"></input>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<button class="btn btn-default text-bold">Login</button>
-							<a href="/reset" class="btn text-gainsboro text-bold">Forgot password</a>
+							<button class="btn btn-default text-fantasy">Register</button>
 						</div>
 
 					</form>
 				</div>
 				<div class="panel-footer">
-					<a href="/register"><span class="text-gainsboro">Register</span></a>
+					<a href="/login"><span class="text-gainsboro">Login</span></a>
 				</div>
 			</div>
 		</div>
 
 	</div>
-
 	<script type="text/javascript">
 		$(document).ready(function(){
 
 			$('form').submit(function(ev){
-				
 				ev.preventDefault();
 				
 				var username = $(this).find('#username').val();
 				var password = $(this).find('#password').val();
 				
-				SystemJS.import('/js/auth.js').then(function(Auth){
+				SystemJS.import('/js/user.js').then(function(User){
 
-					Auth.login(username, password).then(function(token){
-						store.set('token', token);
-						window.location = '/systemjs/';
+					User.register(username, password).then(function(token){
+						alertify.success('User created.');
+
+						setTimeout(function(){
+							alertify.message('Redirecting...');
+
+							setTimeout(function(){
+								window.location = '/login';
+							}, 1000);
+
+						}, 1000);
+
 					}).catch(function(err){
 						switch(err.status){
 							case 400:
-							return alertify.error( i18n.get('incorrect_username_password') );
+							return alertify.error( i18n.get('username_taken') );
 							default:
 							return alertify.error( i18n.get('unknown_error') );
 						}
@@ -125,10 +133,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			
-			/*SystemJS.import('/js/css-loader.js').then(function(CSSLoader){
-				(new CSSLoader()).require('theme-dark');
-			});*/
-
 			(function autoCenter(){
 
 				function center(){
