@@ -47,7 +47,10 @@ router.post('/register', function register(req, res){
 
 router.get('/users', function users(req, res){
 	
-	User.all().then(function(users){
+	User.all({
+		offset : parseInt(req.query.skip || 0),
+		limit : parseInt(req.query.take || 10)
+	}).then(function(users){
 		var json = users.map(function(u){
 			return {
 				id : u.id,
