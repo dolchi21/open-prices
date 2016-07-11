@@ -64,18 +64,23 @@ setups.products = (function(products){
 
 
 setups.vendors = (function(vendors){
-	var afip = require('./afip');
+	
+	var Persona = require('node-afip').Persona;
 
 	var promises = vendors.map(function(vendor){
-		return afip.persona(vendor).then(function(data){
+		
+		return Persona.find(vendor).then(function(persona){
+			
 			return Vendor.create({
-				code : data.code(),
-				name : data.name(),
-				address : data.address()
+				code : persona.get('idPersona'),
+				name : persona.get('name'),
+				address : persona.get('address')
 			}).catch(function(err){
-				console.log(err);
+				console.log('vendor', err);
 			});
+
 		});
+
 	});
 	return Promise.all( promises );
 
