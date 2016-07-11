@@ -23,6 +23,9 @@
 			return self;
 		}
 		function get(key){
+			if (key === undefined) {
+				return self._dataValues;
+			}
 			return self._dataValues[key];
 		}
 
@@ -80,7 +83,7 @@
 		});
 	}
 	User.save = function save(user){
-		return axios.put('/api/user', user.json(), {
+		return axios.put('/api/user', user.get(), {
 			headers : { Authorization : 'Bearer ' + store.get('token') }
 		});
 	}
