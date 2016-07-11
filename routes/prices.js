@@ -15,7 +15,6 @@ router.get('/', function all(req, res){});
 
 router.get('/random', function random(req, res){
 
-
 	var rand = {
 		order : [ Sequelize.fn('RAND') ]
 	}
@@ -46,7 +45,6 @@ router.get('/random', function random(req, res){
 	}).then(function(price){
 		res.json( price.get() );
 	});
-
 
 });
 
