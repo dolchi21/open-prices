@@ -1,3 +1,5 @@
+var Promise = require('bluebird');
+
 var sequelize = require('./sequelize');
 
 
@@ -35,10 +37,13 @@ setups.products = (function(products){
 					where : { code : price.vendor }
 				});
 
-				Promise.all([p1, p2]).then(function(ffms){
+				Promise.all([p1, p2]).spread(function(user, vendor){
 
-					var user = ffms[0];
-					var vendor = ffms[1];
+					vendor.hasProduct(product).then(function(has){
+						if (!has) {
+							vendor.addProduct(product);
+						}
+					});
 
 					return Price.create({
 						price : price.price,
