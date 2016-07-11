@@ -200,7 +200,7 @@ var sequelize = new Sequelize('open_prices', 'dolcea', 'amteki17', {
 	User.hasMany(ProductName);
 
 	Vendor.hasMany(Price);
-	Vendor.hasMany(Product);
+	Vendor.belongsToMany(Product, { through : 'VendorProduct' });
 
 	Session.hasMany(Report);
 	Report.belongsTo(Session);
