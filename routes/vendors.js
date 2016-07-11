@@ -6,16 +6,19 @@ var router = express.Router();
 
 var sequelize = require('../sequelize');
 
-var Product = sequelize.models.product;
-var Price = sequelize.models.price;
-var Vendor = sequelize.models.vendor;
+var Product = sequelize.model('Product');
+var Price = sequelize.model('Price');
+var Vendor = sequelize.model('Vendor');
 
 var afip = require('../afip');
 
 
 router.get('/', function all(req, res){
 	
-	Vendor.all().then(function(vendors){
+	Vendor.all({
+		offset : req.query.skip || 0,
+		limit : req.query.take || 10
+	}).then(function(vendors){
 
 		var arr = vendors.map(function(vendor){
 			return vendor.get();
@@ -25,6 +28,41 @@ router.get('/', function all(req, res){
 
 	});
 
+});
+
+router.get('/:code', function vendor(req, res){
+	Vendor.findOne({
+		where : { code : req.params.code }
+	}).then(function(vendor){
+		if (!vendor) {
+			return res.json({
+				code : req.params.code,
+				vendor : null
+			});
+		}
+		return res.json( vendor.get() );
+	});
+});
+router.get('/:code/products', function vendorProducts(req, res){
+	Vendor.findOne({
+		where : { code : req.params.code }
+	}).then(function(vendor){
+		if (!vendor) {
+			return null;
+		}
+		console.log(vendor.get());
+		return vendor.getProducts();
+	}).then(function(products){
+
+		if (!products) {
+			return res.send('No products yet.');
+		}
+
+		var json = products.map(function(product){ return product.get(); });
+
+		res.json(json);
+
+	});
 });
 
 router.get('/random', function random(req, res){
