@@ -232,5 +232,17 @@
 			"vendor" : 30709368237
 		}
 	]
+},
+{
+	"barcode" : 03800084674,
+	"name" : "Pringles",
+	"prices" : [
+		{
+			"price" : 28,
+			"date" : "2016-11-01",
+			"username" : "axel.dolce@gmail.com",
+			"vendor" : 30708772964
+		}
+	]
 }
 ]
