@@ -1,14 +1,12 @@
 var express = require('express')
 var router = express.Router()
 
-var jwt = require('express-jwt')
-var jsonwebtoken = require('jsonwebtoken')
-
 var sequelize = require('../sequelize').default
 var User = sequelize.model('User')
 
-var store = require('../stores/variables').default
-store.set('jwt_secret', Math.random() + '')
+
+var jwt = require('../lib/jwt')
+console.log(jwt)
 
 
 router.post('/token', (req, res, next) => {
@@ -27,18 +25,17 @@ router.post('/token', (req, res, next) => {
             return next(err)
         }
 
-        var secret = store.get('jwt_secret')
-        var jwt = jsonwebtoken.sign({
+        var jsonwebtoken = jwt.sign({
             data: UserModelInterface(user)
-        }, secret, { expiresIn: 60 })
+        }, { expiresIn: 60 })
 
-        res.cookie('accessToken', jwt, {
+        res.cookie('accessToken', jsonwebtoken, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 20
+            maxAge: 1000 * 60 * 1
         })
 
         res.json({
-            data: jsonwebtoken.decode(jwt)
+            data: jwt.decode(jsonwebtoken)
         })
 
     })
@@ -54,14 +51,13 @@ router.get('/logout', (req, res, next) => {
     })
 })
 
-router.use('/users', jwt({
-    secret: store.get('jwt_secret'),
-    getToken: req => req.cookies.accessToken
-}))
+router.use('/users', jwt.middleware())
 router.get('/users', (req, res, next) => {
+
     User.all().then(users => users.map(UserModelInterface)).then(users => {
         res.json({
-            data: users
+            data: users,
+            user : req.user
         })
     })
 })
@@ -108,6 +104,6 @@ function UserInterface(user) {
     }
     return object
 }
-function UserModelInterface(user){
+function UserModelInterface(user) {
     return UserInterface(user.get())
 }

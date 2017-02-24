@@ -23,15 +23,21 @@ var seneca = require('./seneca-client')
 app.use('/api', require('./routes/api'))
 app.use(require('./routes/services'))
 
+app.use('/user', require('./lib/jwt').middleware(), (req, res, next) => {
+    res.json({
+        data : req.user
+    })
+})
+
 app.get('/members', (req, res, next) => {
-    
+
     var jsonwebtoken = require('jsonwebtoken')
 
     var store = require('./stores/variables').default
 
     var json = {
-        data : jsonwebtoken.decode(req.cookies.accessToken),
-        store : store.get()
+        data: jsonwebtoken.decode(req.cookies.accessToken),
+        store: store.get()
     }
 
     res.json(json)
