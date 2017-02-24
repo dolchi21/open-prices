@@ -6,6 +6,10 @@ var seneca = require('../seneca-client')
 var services = require('../openprices-services')
 var Vendors = services.vendors
 
+
+var auth = require('./auth')
+router.use('/auth', auth)
+
 var products = require('./products')
 router.use('/products', products)
 
