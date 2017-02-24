@@ -23,6 +23,21 @@ var seneca = require('./seneca-client')
 app.use('/api', require('./routes/api'))
 app.use(require('./routes/services'))
 
+app.get('/members', (req, res, next) => {
+    
+    var jsonwebtoken = require('jsonwebtoken')
+
+    var store = require('./stores/variables').default
+
+    var json = {
+        data : jsonwebtoken.decode(req.cookies.accessToken),
+        store : store.get()
+    }
+
+    res.json(json)
+
+})
+
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
