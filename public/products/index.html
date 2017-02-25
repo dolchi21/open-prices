@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <title>OpenPrices Products</title>
+
+    <link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/font-awesome-4.6.3/css/font-awesome.min.css">
+
+    <script src="/js/system.js"></script>
+    <script src="/js/system.config.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" id="style">
+
+</head>
+
+<body>
+    <div class="container">
+        <div id="app"></div>
+    </div>
+    <script type="text/javascript">
+        SystemJS.import('./app.js').then(function (App) {
+            App.mount()
+        })
+    </script>
+</body>
+
+</html>

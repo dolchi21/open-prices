@@ -66,7 +66,7 @@
 						<div class="form-group">				
 							<div class="input-group">
 								<span class="input-group-addon bg-red text-white"><i class="mwidth-3r fa fa-user"></i></span>
-								<input class="form-control" id="username" name="username" placeholder="Username"></input>
+								<input class="form-control" id="username" name="username" placeholder="Username" autofocus></input>
 							</div>
 						</div>
 
@@ -106,7 +106,7 @@
 
 					Auth.login(username, password).then(function(token){
 						store.set('token', token);
-						window.location = '/systemjs/';
+						//window.location = '/members/';
 					}).catch(function(err){
 						switch(err.status){
 							case 400:
