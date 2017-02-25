@@ -32,4 +32,9 @@ router.get('/vendors', (req, res, next) => {
 
 })
 
+var productsController = require('../controllers/products')
+router.get('/user/products', require('../lib/jwt').middleware())
+router.get('/user/products', productsController.getUserProducts)
+
+
 module.exports = router
