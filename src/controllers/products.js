@@ -1,10 +1,12 @@
 var seneca = require('../seneca-client')
 
+var sequelize = require('../sequelize').default
+
 var services = require('../openprices-services')
 var Products = services.products
 var Vendors = services.vendors
 
-export function getUserProducts(req, res, next){
+export function getUserProducts(req, res, next) {
 
     var action = Products.getProducts()
     action.includeAll = !!req.query.includeAll
@@ -15,17 +17,16 @@ export function getUserProducts(req, res, next){
 
         var { data } = response
         delete response.data
-        try{
 
         res.json({
             response,
             data: data.map(ProductInterface)
         })
-        }catch(e){ console.log(e)}
     })
 
 }
-export function getProducts(req, res, next){
+
+export function getProducts(req, res, next) {
 
     var action = Products.getProducts()
     action.includeAll = !!req.query.includeAll
@@ -43,8 +44,7 @@ export function getProducts(req, res, next){
     })
 
 }
-
-export function getProductByBarcode(req, res, next){
+export function getProductByBarcode(req, res, next) {
 
     var action = Products.getProduct(req.params.barcode)
 
@@ -60,12 +60,18 @@ export function getProductByBarcode(req, res, next){
         })
     })
 
-}
+    seneca.act({
+        SERVICE: 'PRODUCTS', TYPE: 'PRODUCT_NAME', barcode: req.params.barcode
+    }, function (err, response) {
+        console.log(err, response)
+        console.log('NAME')
+    })
 
-export function getProductPrice(req, res, next){
-    
+}
+export function getProductPrice(req, res, next) {
+
     var action = Products.getProductAveragePrice(req.params.barcode)
-    
+
     seneca.act(action, (err, response) => {
         if (err) return next(err)
         var data = response.data
@@ -75,8 +81,31 @@ export function getProductPrice(req, res, next){
     })
 
 }
+export function getProductPrices(req, res, next) {
+    var Product = sequelize.model('Product')
 
-export function getProductPrices(req, res, next){
+    var { barcode } = req.params
+
+    Product.findOne({
+        where: {
+            barcode
+        }
+    }).then(function (product) {
+        return product.getPrices({
+            order : 'date DESC'
+        }).then(function (prices) {
+            var p = ProductModelInterface(product)
+            p.prices = prices.map(PriceModelInterface)
+            res.json({
+                meta: p,
+                data : p.prices
+            })
+        })
+    }).catch(err => {
+        next(err)
+    })
+}
+export function getProductPrices2(req, res, next) {
 
     var action = Products.getProductAveragePrice(req.params.barcode)
     console.log(action)
@@ -88,12 +117,21 @@ export function getProductPrices(req, res, next){
 
 }
 
+export function createProduct(req, res, next) {
+
+    var { Product, ProductName } = sequelize.models
+
+    var user = req.user
+
+    var { barcode, name } = req.body
+
+
+
+}
+
 function ProductInterface(p) {
-    
-    var name = ((names) => {
-        if (!names.length) return
-        return names[0].name
-    })(p.ProductNames || []);
+
+    console.log(p.name)
 
     var vendors = ((vendors) => {
         if (!vendors.length) return
@@ -103,16 +141,32 @@ function ProductInterface(p) {
     var obj = {
         id: p.id,
         barcode: p.barcode,
-        name,
+        name: p.name,
         vendors,
-        updatedAt: p.updatedAt
+        updatedAt: p.updatedAt,
+        //_data: p
     }
     return obj
 }
-function VendorInterface(v){
+function ProductModelInterface(p) {
+    return ProductInterface(p.get())
+}
+function VendorInterface(v) {
     var obj = {
-        code : v.code,
-        name : v.name
+        code: v.code,
+        name: v.name
     }
     return obj
+}
+function PriceInterface(pr) {
+    var obj = {
+        price: pr.price,
+        date: pr.date,
+        vendor : pr.VendorId,
+        user : pr.UserId
+    }
+    return obj
+}
+function PriceModelInterface(pr) {
+    return PriceInterface(pr.get())
 }
