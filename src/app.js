@@ -15,6 +15,12 @@ app.use(cookieParser());
 app.use(express.static('../public'));
 app.use('/node_modules', express.static('../node_modules'));
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Content-Type')
+    next()
+})
+
 
 
 var seneca = require('./seneca-client')
@@ -26,7 +32,7 @@ app.use(require('./routes/services'))
 
 app.use('/user', require('./lib/jwt').middleware(), (req, res, next) => {
     res.json({
-        data : req.user
+        data: req.user
     })
 })
 
