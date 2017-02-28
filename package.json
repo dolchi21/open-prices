@@ -7,6 +7,7 @@
     "build": "babel src -d ./dist --watch"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.16.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
@@ -14,6 +15,8 @@
     "jsonwebtoken": "^7.3.0",
     "morgan": "^1.8.1",
     "node-afip": "^1.0.4",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "seneca": "^3.3.0",
     "seneca-balance-client": "^0.6.0",
     "seneca-mesh": "^0.9.0",
@@ -22,6 +25,7 @@
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.23.0",
     "express-print-routes": "^1.0.0"
   }
 }
