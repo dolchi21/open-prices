@@ -13,6 +13,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _ProductForm = require('./components/ProductForm.js');
+
+var _ProductForm2 = _interopRequireDefault(_ProductForm);
+
 var _ProductsList = require('./components/ProductsList.js');
 
 var _ProductsList2 = _interopRequireDefault(_ProductsList);
@@ -27,6 +31,11 @@ var App = function App(props) {
             'div',
             null,
             'App'
+        ),
+        _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_ProductForm2.default, null)
         ),
         _react2.default.createElement(
             'div',

@@ -12,7 +12,7 @@ var ProductsList = React.createClass({
                 {products.map(p => {
                     return (
                         <ListItem onClick={store.loadProduct.bind(store, p.barcode)}>
-                            <Product {...p}/>
+                            <Product {...p} />
                         </ListItem>
                     )
                 })}
