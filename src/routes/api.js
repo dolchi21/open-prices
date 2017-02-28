@@ -1,11 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-var seneca = require('../seneca-client')
-
-var services = require('../openprices-services')
-var Vendors = services.vendors
-
+var sequelize = require('../sequelize').default
 
 var auth = require('./auth')
 router.use('/auth', auth)
@@ -13,23 +9,16 @@ router.use('/auth', auth)
 var products = require('./products')
 router.use('/products', products)
 
-router.get('/vendors', (req, res, next) => {
+var vendors = require('./vendors')
+router.use('/vendors', vendors)
 
-    var action = Vendors.getVendors()
-    seneca.act(action, function (err, response) {
-
-        if (err) return next(err)
-
-        var { data } = response
-        delete response.data
-
+router.get('/users/:id', function (req, res, next) {
+    var User = sequelize.model('User')
+    User.findById(req.params.id).then(user => {
         res.json({
-            response,
-            data
+            data: UserModelInterface(user)
         })
-
     })
-
 })
 
 var productsController = require('../controllers/products')
@@ -38,3 +27,9 @@ router.get('/user/products', productsController.getUserProducts)
 
 
 module.exports = router
+
+var UserInterface = u => ({
+    id: u.id,
+    username: u.username
+})
+var UserModelInterface = u => UserInterface(u.get())
