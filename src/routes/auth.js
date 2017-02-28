@@ -99,6 +99,7 @@ var AuthError = function AuthError(message, status = 401) {
 
 function UserInterface(user) {
     var object = {
+        id : user.id,
         username: user.username,
         updatedAt: user.updatedAt
     }
