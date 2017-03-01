@@ -27,11 +27,11 @@ router.post('/token', (req, res, next) => {
 
         var jsonwebtoken = jwt.sign({
             data: UserModelInterface(user)
-        }, { expiresIn: 60 })
+        }, { expiresIn: 60 * 20 })
 
         res.cookie('accessToken', jsonwebtoken, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 1
+            maxAge: 1000 * 60 * 20
         })
 
         res.json({
