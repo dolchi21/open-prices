@@ -6,6 +6,12 @@ var sequelize = require('../sequelize').default
 var auth = require('./auth')
 router.use('/auth', auth)
 
+router.get('/user', require('../lib/jwt').middleware(), (req, res, next) => {
+    res.json({
+        data : req.user
+    })
+})
+
 var products = require('./products')
 router.use('/products', products)
 
