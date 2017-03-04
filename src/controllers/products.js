@@ -92,13 +92,13 @@ export function getProductPrices(req, res, next) {
         }
     }).then(function (product) {
         return product.getPrices({
-            order : 'date DESC'
+            order: 'date DESC'
         }).then(function (prices) {
             var p = ProductModelInterface(product)
             p.prices = prices.map(PriceModelInterface)
             res.json({
                 meta: p,
-                data : p.prices
+                data: p.prices
             })
         })
     }).catch(err => {
@@ -121,10 +121,40 @@ export function createProduct(req, res, next) {
 
     var { Product, ProductName } = sequelize.models
 
-    var user = req.user
+    var user = req.user || {
+        id: 1
+    }
 
     var { barcode, name } = req.body
 
+    Product.findOrCreate({
+        where: {
+            barcode
+        },
+        defaults: { name }
+    }).then(([product, created]) => {
+        return ProductName.findOrCreate({
+            where: {
+                UserId: user.id,
+                ProductId: product.id
+            },
+            defaults: { name }
+        }).then(([product_name, created]) => {
+            if (!created) {
+                product_name.name = name
+            }
+            return product_name.save()
+        }).then((pname) => {
+            res.json({
+                meta: {
+                    name: pname
+                },
+                data: ProductModelInterface(product)
+            })
+        })
+    }).catch(err => {
+        next(err)
+    })
 
 
 }
@@ -162,8 +192,8 @@ function PriceInterface(pr) {
     var obj = {
         price: pr.price,
         date: pr.date,
-        vendor : pr.VendorId,
-        user : pr.UserId
+        vendor: pr.VendorId,
+        user: pr.UserId
     }
     return obj
 }
