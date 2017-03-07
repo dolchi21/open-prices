@@ -18,7 +18,11 @@ export function middleware(options = {}) {
     
     var opts = Object.assign({
         secret: store.get('jwt_secret'),
-        getToken: req => req.cookies.accessToken
+        getToken: req => {
+            var token = req.cookies.accessToken
+            var hToken = (req.headers.authorization || '').replace('Bearer ', '')
+            return token || hToken
+        }
     }, options)
 
     return jwt(opts)
