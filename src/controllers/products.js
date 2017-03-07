@@ -62,10 +62,7 @@ export function getProductByBarcode(req, res, next) {
 
     seneca.act({
         SERVICE: 'PRODUCTS', TYPE: 'PRODUCT_NAME', barcode: req.params.barcode
-    }, function (err, response) {
-        console.log(err, response)
-        console.log('NAME')
-    })
+    }, function (err, response) { })
 
 }
 export function getProductPrice(req, res, next) {
@@ -159,9 +156,74 @@ export function createProduct(req, res, next) {
 
 }
 
-function ProductInterface(p) {
+export function createProductPrice(req, res, next) {
 
-    console.log(p.name)
+    var user = { id: 1 }
+    var { barcode } = req.params
+    var { price, date, vendor, vendor_code } = req.body
+
+    var date = (function normalizeDate(date) {
+        var date = date ? new Date(date) : new Date()
+        date.setHours(0)
+        date.setMinutes(0)
+        date.setSeconds(0)
+        date.setMilliseconds(0)
+        return date
+    })(date)
+
+
+    var { Product, Price, Vendor } = sequelize.models
+
+
+    var onProduct = Product.findOne({
+        where: { barcode }
+    })
+    var onVendor = Vendor.findOne({
+        where: { code: vendor_code || vendor }
+    }).then(v => {
+        if (!v) {
+            return require('../lib/Vendors').createAFIPVendor(vendor_code || vendor)
+        }
+        return v
+    })
+
+
+    Promise.all([onProduct, onVendor]).then(([product, vendor]) => {
+        return Price.findOne({
+            where: {
+                date,
+                UserId: user.id,
+                ProductId: product.id,
+                VendorId: vendor.id
+            }
+        }).then(p => {
+            if (p) {
+                return p.update({
+                    price,
+                    updatedAt: new Date()
+                })
+            }
+            return Price.create({
+                date,
+                UserId: user.id,
+                ProductId: product.id,
+                VendorId: vendor.id,
+                price
+            })
+        }).then(price => {
+            res.json({
+                price,
+                product,
+                vendor
+            })
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+    })
+
+}
+
+function ProductInterface(p) {
 
     var vendors = ((vendors) => {
         if (!vendors.length) return
@@ -190,6 +252,7 @@ function VendorInterface(v) {
 }
 function PriceInterface(pr) {
     var obj = {
+        id: pr.id,
         price: pr.price,
         date: pr.date,
         vendor: pr.VendorId,
