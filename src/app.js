@@ -17,7 +17,8 @@ app.use(cookieParser());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Content-Type')
+    res.header('Access-Control-Allow-Methods', 'POST,GET,HEAD,OPTIONS,DELETE')
+    res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
     next()
 })
 
@@ -30,7 +31,7 @@ var seneca = require('./seneca-client')
 app.use('/api', require('./routes/api'))
 app.use(require('./routes/services'))
 
-app.use('/user', require('./lib/jwt').middleware(), (req, res, next) => {
+app.get('/api/user', require('./lib/jwt').middleware(), (req, res, next) => {
     res.json({
         data: req.user
     })
@@ -54,6 +55,7 @@ app.get('/members', (req, res, next) => {
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
+    err.message = 'This is no the page you\'re looking for'
     next(err);
 });
 app.use(function (err, req, res, next) {
