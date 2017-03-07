@@ -35,7 +35,8 @@ router.post('/token', (req, res, next) => {
         })
 
         res.json({
-            data: jwt.decode(jsonwebtoken)
+            data: jwt.decode(jsonwebtoken),
+            jwt: jsonwebtoken
         })
 
     })
@@ -51,28 +52,50 @@ router.get('/logout', (req, res, next) => {
     })
 })
 
-router.use('/users', jwt.middleware())
+//router.use('/users', jwt.middleware())
 router.get('/users', (req, res, next) => {
 
     User.all().then(users => users.map(UserModelInterface)).then(users => {
         res.json({
             data: users,
-            user : req.user
+            user: req.user
         })
     })
 })
 
+router.post('/register', function validateRequest(req, res, next) {
+
+    var { username, password, nickname } = req.body
+
+    var err = new Error()
+    err.name = 'RegistrationError'
+    err.message = 'Unknown error.'
+
+    if (!username) {
+        err.message = 'Username required'
+        return next(err)
+    }
+    if (!nickname) {
+        err.message = 'Nickname required'
+        return next(err)
+    }
+    if (!password) {
+        err.message = 'Password required'
+        return next(err)
+    }
+
+    next()
+
+})
 router.post('/register', (req, res, next) => {
 
-    var { username, password } = req.body
+    var { username, password, nickname } = req.body
 
     User.create({
-        username, password
+        username, password, nickname
     }).then(UserModelInterface).then(user => {
-        res.json({
-            data: user
-        })
-    })
+        res.json({ data: user })
+    }).catch(next)
 
 })
 
@@ -99,8 +122,9 @@ var AuthError = function AuthError(message, status = 401) {
 
 function UserInterface(user) {
     var object = {
-        id : user.id,
+        id: user.id,
         username: user.username,
+        nickname: user.nickname,
         updatedAt: user.updatedAt
     }
     return object
