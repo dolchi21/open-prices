@@ -8,7 +8,7 @@ router.use('/auth', auth)
 
 router.get('/user', require('../lib/jwt').middleware(), (req, res, next) => {
     res.json({
-        data : req.user
+        data: req.user
     })
 })
 
@@ -17,6 +17,28 @@ router.use('/products', products)
 
 var vendors = require('./vendors')
 router.use('/vendors', vendors)
+
+
+router.delete('/prices/:id', require('../lib/jwt').middleware(), (req, res, next) => {
+
+    var Price = sequelize.model('Price')
+
+    var user = req.user.data
+    var id = parseInt(req.params.id)
+
+    Price.destroy({
+        where: {
+            id,
+            UserId: user.id
+        }
+    }).then(() => {
+        res.json({
+            success: true
+        })
+    }).catch(next)
+
+})
+
 
 router.get('/users/:id', function (req, res, next) {
     var User = sequelize.model('User')
