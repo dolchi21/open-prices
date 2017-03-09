@@ -21,7 +21,16 @@ export function getVendors(req, res, next) {
 export function getVendor(req, res, next) {
     var { id } = req.params
     Vendor.findById(id).then(VendorModelInterface).then(data => {
-        return require('../lib/Vendors').getVendorInfo(data.code).then(persona => {
+        
+        return res.json({ data })
+
+        return require('../lib/Vendors').getVendorInfo(data.code).catch(err => {
+            res.json({
+                errors : [err],
+                data
+            })
+            throw err
+        }).then(persona => {
             res.json({
                 afip : persona,
                 data

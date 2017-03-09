@@ -102,7 +102,7 @@ export function getProductPrices(req, res, next) {
         next(err)
     })
 }
-export function getProductPrices2(req, res, next) {
+/*export function getProductPrices2(req, res, next) {
 
     var action = Products.getProductAveragePrice(req.params.barcode)
     console.log(action)
@@ -112,15 +112,28 @@ export function getProductPrices2(req, res, next) {
         res.json(response)
     })
 
+}*/
+export function getProductNames(req, res, next){
+    
+    var { barcode } = req.params
+
+    sequelize.model('Product').findOne({
+        where : { barcode }
+    }).then(product => {
+        return product.getProductNames().then(names => {
+            res.json({
+                data : names.map(n => n.get())
+            })
+        })
+    }).catch(next)
+
 }
 
 export function createProduct(req, res, next) {
 
     var { Product, ProductName } = sequelize.models
 
-    var user = req.user || {
-        id: 1
-    }
+    var user = req.user.data
 
     var { barcode, name } = req.body
 
@@ -158,7 +171,7 @@ export function createProduct(req, res, next) {
 
 export function createProductPrice(req, res, next) {
 
-    var user = { id: 1 }
+    var user = req.user.data
     var { barcode } = req.params
     var { price, date, vendor, vendor_code } = req.body
 
@@ -255,6 +268,7 @@ function PriceInterface(pr) {
         id: pr.id,
         price: pr.price,
         date: pr.date,
+        product : pr.ProductId,
         vendor: pr.VendorId,
         user: pr.UserId
     }
