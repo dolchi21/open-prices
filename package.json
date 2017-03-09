@@ -7,6 +7,7 @@
     "build": "babel src -d ./dist --watch"
   },
   "dependencies": {
+    "adjective-adjective-animal": "^1.3.3",
     "axios": "^0.15.3",
     "body-parser": "^1.16.1",
     "cookie-parser": "^1.4.3",

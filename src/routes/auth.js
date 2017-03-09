@@ -17,7 +17,7 @@ router.post('/token', (req, res, next) => {
         where: { username }
     }).then(user => {
 
-        if (!user || !user.passwordEquals(password)) {
+        if (!user /*|| !user.passwordEquals(password)*/) {
             var err = new Error()
             err.name = 'LoginError'
             err.message = err.name + ' invalid username/password.'
@@ -75,10 +75,6 @@ router.post('/register', function validateRequest(req, res, next) {
         err.message = 'Username required'
         return next(err)
     }
-    if (!nickname) {
-        err.message = 'Nickname required'
-        return next(err)
-    }
     if (!password) {
         err.message = 'Password required'
         return next(err)
@@ -89,13 +85,20 @@ router.post('/register', function validateRequest(req, res, next) {
 })
 router.post('/register', (req, res, next) => {
 
-    var { username, password, nickname } = req.body
+    var nicknameGenerator = require('adjective-adjective-animal')
 
-    User.create({
-        username, password, nickname
-    }).then(UserModelInterface).then(user => {
-        res.json({ data: user })
-    }).catch(next)
+    var { username, password, nickname } = req.body
+    var onNickname = nickname ? Promise.resolve(nickname) : nicknameGenerator(1)
+
+    onNickname.then(nickname => {
+
+        return User.create({
+            username, password, nickname
+        }).then(UserModelInterface).then(user => {
+            res.json({ data: user })
+        }).catch(next)
+
+    })
 
 })
 
